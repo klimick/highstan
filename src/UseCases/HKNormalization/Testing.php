@@ -25,7 +25,7 @@ final readonly class Testing
     /**
      * @template F of TypeLambda
      *
-     * @param HK<F, int> $kind
+     * @param F<int> $kind
      * @return Lst<int>
      */
     public function abstractLambda(mixed $kind): Lst
@@ -40,7 +40,7 @@ final readonly class Testing
      *
      * @param Typeclass<F> $tc1
      * @param Typeclass<LstTypeLambda> $tc2
-     * @return HK<F, Lst<int>>
+     * @return F<Lst<int>>
      */
     public function abstractWithConcreteTypeLambda(Typeclass $tc1, Typeclass $tc2): mixed
     {
@@ -52,7 +52,7 @@ final readonly class Testing
      *
      * @param Typeclass<F> $tc1
      * @param Typeclass<LstTypeLambda> $tc2
-     * @return Lst<HK<F, int>>
+     * @return Lst<F<int>>
      */
     public function concreteWithAbstractLambda(Typeclass $tc1, Typeclass $tc2): Lst
     {
@@ -65,7 +65,7 @@ final readonly class Testing
      *
      * @param Typeclass<F> $F
      * @param Typeclass<G> $G
-     * @return HK<G, HK<F, int>>
+     * @return G<F<int>>
      */
     public function __invoke(Typeclass $F, Typeclass $G): HK
     {
