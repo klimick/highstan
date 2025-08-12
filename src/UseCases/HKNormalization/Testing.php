@@ -30,7 +30,8 @@ final readonly class Testing
      */
     public function abstractLambda(mixed $kind): Lst
     {
-        // Intentionally ignored. For testing purposes.
+        // Error.
+        // F<int> is unknown type constructor and cannot be normalized to Lst<int>.
         // @phpstan-ignore return.type
         return $kind;
     }

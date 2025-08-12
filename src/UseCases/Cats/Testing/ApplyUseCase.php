@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
@@ -21,9 +20,9 @@ final readonly class ApplyUseCase
      * @template F of TypeLambda
      *
      * @param Apply<F> $F
-     * @param HK<F, int> $number
-     * @param HK<F, callable(int): string> $toString
-     * @return HK<F, string>
+     * @param F<int> $number
+     * @param F<callable(int): string> $toString
+     * @return F<string>
      */
     public function toString(Apply $F, mixed $number, mixed $toString): mixed
     {
@@ -34,7 +33,7 @@ final readonly class ApplyUseCase
      * @template F of TypeLambda
      *
      * @param Applicative<F> $F
-     * @return HK<F, callable(int): string>
+     * @return F<callable(int): string>
      */
     public static function stringifier(Applicative $F): mixed
     {

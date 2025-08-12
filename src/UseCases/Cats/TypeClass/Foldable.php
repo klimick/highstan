@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\TypeClass;
 
-use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 
 /**
@@ -16,7 +15,7 @@ interface Foldable
      * @template A
      * @template B
      *
-     * @param HK<F, A> $fa
+     * @param F<A> $fa
      * @param B $zero
      * @param callable(B, A): B $reducer
      * @return B

@@ -87,8 +87,8 @@ final readonly class LstInstance implements Monad, Traverse
      *
      * @param Applicative<G> $G
      * @param HK<LstTypeLambda, A> $fa
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, HK<LstTypeLambda, B>>
+     * @param callable(A): G<B> $ab
+     * @return G<HK<LstTypeLambda, B>>
      */
     public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {

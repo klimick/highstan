@@ -101,8 +101,8 @@ final readonly class Either implements HK
      * @template B
      *
      * @param Applicative<G> $G
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, Either<E, B>>
+     * @param callable(A): G<B> $ab
+     * @return G<Either<E, B>>
      */
     public function traverse(Applicative $G, callable $ab): HK
     {

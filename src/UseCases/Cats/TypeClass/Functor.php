@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\TypeClass;
 
-use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 
 /**
@@ -16,9 +15,9 @@ interface Functor
      * @template A
      * @template B
      *
-     * @param HK<F, A> $fa
+     * @param F<A> $fa
      * @param callable(A): B $ab
-     * @return HK<F, B>
+     * @return F<B>
      */
     public function map(mixed $fa, callable $ab): mixed;
 }

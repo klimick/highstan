@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\TypeClass;
 
-use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 
 /**
@@ -20,9 +19,9 @@ interface Traverse extends Functor, Foldable
      * @template B
      *
      * @param Applicative<G> $G
-     * @param HK<F, A> $fa
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, HK<F, B>>
+     * @param F<A> $fa
+     * @param callable(A): G<B> $ab
+     * @return G<F<B>>
      */
     public function traverse(Applicative $G, mixed $fa, callable $ab): mixed;
 }

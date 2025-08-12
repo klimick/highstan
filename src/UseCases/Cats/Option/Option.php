@@ -100,8 +100,8 @@ final readonly class Option implements HK
      * @template B
      *
      * @param Applicative<G> $G
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, Option<B>>
+     * @param callable(A): G<B> $ab
+     * @return G<Option<B>>
      */
     public function traverse(Applicative $G, callable $ab): mixed
     {

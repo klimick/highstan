@@ -90,8 +90,8 @@ final readonly class OptionInstance implements Monad, Traverse
      *
      * @param Applicative<G> $G
      * @param HK<OptionTypeLambda, A> $fa
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, Option<B>>
+     * @param callable(A): G<B> $ab
+     * @return G<Option<B>>
      */
     public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {

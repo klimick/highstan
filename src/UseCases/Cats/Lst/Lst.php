@@ -107,13 +107,13 @@ final readonly class Lst implements HK, \IteratorAggregate
      * @template B
      *
      * @param Applicative<G> $G
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, Lst<B>>
+     * @param callable(A): G<B> $ab
+     * @return G<Lst<B>>
      */
     public function traverse(Applicative $G, callable $ab): mixed
     {
         /**
-         * @var HK<G, self<B>> $gfb
+         * @var G<self<B>> $gfb
          * @phpstan-ignore varTag.type
          */
         $gfb = $G->pure(new self());
@@ -126,7 +126,7 @@ final readonly class Lst implements HK, \IteratorAggregate
 
         foreach ($this as $a) {
             /**
-             * @var HK<G, self<B>> $gfb
+             * @var G<self<B>> $gfb
              * @phpstan-ignore varTag.type, argument.type
              */
             $gfb = $G->apply($ab($a), $G->map($gfb, $addToList));

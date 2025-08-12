@@ -91,8 +91,8 @@ final readonly class EitherInstance implements Monad, Traverse
      *
      * @param Applicative<G> $G
      * @param HK<EitherTypeLambda<E>, A> $fa
-     * @param callable(A): HK<G, B> $ab
-     * @return HK<G, Either<E, B>>
+     * @param callable(A): G<B> $ab
+     * @return G<Either<E, B>>
      */
     public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {

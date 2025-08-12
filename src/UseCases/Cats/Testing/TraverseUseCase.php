@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
@@ -23,9 +22,9 @@ final readonly class TraverseUseCase
      *
      * @param Traverse<F> $F
      * @param Applicative<G> $G
-     * @param HK<F, string> $fa
-     * @param callable(string): HK<G, int> $ab
-     * @return HK<G, HK<F, int>>
+     * @param F<string> $fa
+     * @param callable(string): G<int> $ab
+     * @return G<F<int>>
      */
     public function traverse(Traverse $F, Applicative $G, mixed $fa, callable $ab): mixed
     {
