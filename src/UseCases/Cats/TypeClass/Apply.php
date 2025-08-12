@@ -21,5 +21,5 @@ interface Apply extends Functor
      * @param HK<F, callable(A): B> $fab
      * @return HK<F, B>
      */
-    public function apply(HK $fa, HK $fab): HK;
+    public function apply(mixed $fa, mixed $fab): mixed;
 }

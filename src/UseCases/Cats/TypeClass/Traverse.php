@@ -24,5 +24,5 @@ interface Traverse extends Functor, Foldable
      * @param callable(A): HK<G, B> $ab
      * @return HK<G, HK<F, B>>
      */
-    public function traverse(Applicative $G, HK $fa, callable $ab): HK;
+    public function traverse(Applicative $G, mixed $fa, callable $ab): mixed;
 }

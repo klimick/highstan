@@ -110,7 +110,7 @@ final readonly class Lst implements HK, \IteratorAggregate
      * @param callable(A): HK<G, B> $ab
      * @return HK<G, Lst<B>>
      */
-    public function traverse(Applicative $G, callable $ab): HK
+    public function traverse(Applicative $G, callable $ab): mixed
     {
         /**
          * @var HK<G, self<B>> $gfb

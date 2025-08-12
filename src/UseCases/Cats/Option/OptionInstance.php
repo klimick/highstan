@@ -20,9 +20,9 @@ final readonly class OptionInstance implements Monad, Traverse
      * @template A
      *
      * @param A $a
-     * @return HK<OptionTypeLambda, A>
+     * @return Option<A>
      */
-    public function pure(mixed $a): HK
+    public function pure(mixed $a): Option
     {
         return Option::some($a);
     }
@@ -33,11 +33,11 @@ final readonly class OptionInstance implements Monad, Traverse
      *
      * @param HK<OptionTypeLambda, A> $fa
      * @param HK<OptionTypeLambda, callable(A): B> $fab
-     * @return HK<OptionTypeLambda, B>
+     * @return Option<B>
      */
-    public function apply(HK $fa, HK $fab): HK
+    public function apply(mixed $fa, mixed $fab): Option
     {
-        return OptionTypeLambda::fix($fa)->apply(OptionTypeLambda::fix($fab));
+        return $fa->apply($fab);
     }
 
     /**
@@ -46,11 +46,11 @@ final readonly class OptionInstance implements Monad, Traverse
      *
      * @param HK<OptionTypeLambda, A> $fa
      * @param callable(A): B $ab
-     * @return HK<OptionTypeLambda, B>
+     * @return Option<B>
      */
-    public function map(HK $fa, callable $ab): HK
+    public function map(mixed $fa, callable $ab): Option
     {
-        return OptionTypeLambda::fix($fa)->map($ab);
+        return $fa->map($ab);
     }
 
     /**
@@ -59,13 +59,11 @@ final readonly class OptionInstance implements Monad, Traverse
      *
      * @param HK<OptionTypeLambda, A> $fa
      * @param callable(A): HK<OptionTypeLambda, B> $ab
-     * @return HK<OptionTypeLambda, B>
+     * @return Option<B>
      */
-    public function flatMap(HK $fa, callable $ab): HK
+    public function flatMap(mixed $fa, callable $ab): Option
     {
-        return OptionTypeLambda::fix($fa)->flatMap(
-            static fn($a) => OptionTypeLambda::fix($ab($a)),
-        );
+        return $fa->flatMap($ab);
     }
 
     /**
@@ -77,9 +75,9 @@ final readonly class OptionInstance implements Monad, Traverse
      * @param callable(B, A): B $reducer
      * @return B
      */
-    public function fold(HK $fa, mixed $zero, callable $reducer): mixed
+    public function fold(mixed $fa, mixed $zero, callable $reducer): mixed
     {
-        return OptionTypeLambda::fix($fa)->match(
+        return $fa->match(
             onNone: static fn() => $zero,
             onSome: static fn($a) => $reducer($zero, $a),
         );
@@ -93,10 +91,10 @@ final readonly class OptionInstance implements Monad, Traverse
      * @param Applicative<G> $G
      * @param HK<OptionTypeLambda, A> $fa
      * @param callable(A): HK<G, B> $ab
-     * @return HK<G, HK<OptionTypeLambda, B>>
+     * @return HK<G, Option<B>>
      */
-    public function traverse(Applicative $G, HK $fa, callable $ab): HK
+    public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {
-        return OptionTypeLambda::fix($fa)->traverse($G, $ab);
+        return $fa->traverse($G, $ab);
     }
 }

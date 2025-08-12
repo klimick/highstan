@@ -8,13 +8,10 @@ use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
-use Highstan\UseCases\Cats\Either\EitherTypeLambda;
 use Highstan\UseCases\Cats\Lst\Lst;
 use Highstan\UseCases\Cats\Lst\LstInstance;
-use Highstan\UseCases\Cats\Lst\LstTypeLambda;
 use Highstan\UseCases\Cats\Option\Option;
 use Highstan\UseCases\Cats\Option\OptionInstance;
-use Highstan\UseCases\Cats\Option\OptionTypeLambda;
 use Highstan\UseCases\Cats\TypeClass\Applicative;
 use Highstan\UseCases\Cats\TypeClass\Apply;
 
@@ -28,7 +25,7 @@ final readonly class ApplyUseCase
      * @param HK<F, callable(int): string> $toString
      * @return HK<F, string>
      */
-    public function toString(Apply $F, HK $number, HK $toString): HK
+    public function toString(Apply $F, mixed $number, mixed $toString): mixed
     {
         return $F->apply($number, $toString);
     }
@@ -39,25 +36,25 @@ final readonly class ApplyUseCase
      * @param Applicative<F> $F
      * @return HK<F, callable(int): string>
      */
-    public static function stringifier(Applicative $F): HK
+    public static function stringifier(Applicative $F): mixed
     {
         return $F->pure(static fn(int $n): string => "{$n}");
     }
 
     /**
      * @param Lst<int> $numbers
-     * @return HK<LstTypeLambda, string>
+     * @return Lst<string>
      */
-    public function lst(LstInstance $lstI, Lst $numbers): HK
+    public function lst(LstInstance $lstI, Lst $numbers): Lst
     {
         return $this->toString($lstI, $numbers, self::stringifier($lstI));
     }
 
     /**
      * @param Option<int> $number
-     * @return HK<OptionTypeLambda, string>
+     * @return Option<string>
      */
-    public function option(OptionInstance $optionI, Option $number): HK
+    public function option(OptionInstance $optionI, Option $number): Option
     {
         return $this->toString($optionI, $number, self::stringifier($optionI));
     }
@@ -65,9 +62,9 @@ final readonly class ApplyUseCase
     /**
      * @param EitherInstance<Err> $eitherI
      * @param Either<Err, int> $number
-     * @return HK<EitherTypeLambda<Err>, string>
+     * @return Either<Err, string>
      */
-    public function either(EitherInstance $eitherI, Either $number): HK
+    public function either(EitherInstance $eitherI, Either $number): Either
     {
         return $this->toString($eitherI, $number, self::stringifier($eitherI));
     }

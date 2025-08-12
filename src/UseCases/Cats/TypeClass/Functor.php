@@ -20,5 +20,5 @@ interface Functor
      * @param callable(A): B $ab
      * @return HK<F, B>
      */
-    public function map(HK $fa, callable $ab): HK;
+    public function map(mixed $fa, callable $ab): mixed;
 }

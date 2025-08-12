@@ -21,9 +21,9 @@ final readonly class EitherInstance implements Monad, Traverse
      * @template A
      *
      * @param A $a
-     * @return HK<EitherTypeLambda<E>, A>
+     * @return Either<E, A>
      */
-    public function pure(mixed $a): HK
+    public function pure(mixed $a): Either
     {
         return Either::right($a);
     }
@@ -34,11 +34,11 @@ final readonly class EitherInstance implements Monad, Traverse
      *
      * @param HK<EitherTypeLambda<E>, A> $fa
      * @param HK<EitherTypeLambda<E>, callable(A): B> $fab
-     * @return HK<EitherTypeLambda<E>, B>
+     * @return Either<E, B>
      */
-    public function apply(HK $fa, HK $fab): HK
+    public function apply(mixed $fa, mixed $fab): Either
     {
-        return EitherTypeLambda::fix($fa)->apply(EitherTypeLambda::fix($fab));
+        return $fa->apply($fab);
     }
 
     /**
@@ -47,11 +47,11 @@ final readonly class EitherInstance implements Monad, Traverse
      *
      * @param HK<EitherTypeLambda<E>, A> $fa
      * @param callable(A): B $ab
-     * @return HK<EitherTypeLambda<E>, B>
+     * @return Either<E, B>
      */
-    public function map(HK $fa, callable $ab): HK
+    public function map(mixed $fa, callable $ab): Either
     {
-        return EitherTypeLambda::fix($fa)->map($ab);
+        return $fa->map($ab);
     }
 
     /**
@@ -60,13 +60,11 @@ final readonly class EitherInstance implements Monad, Traverse
      *
      * @param HK<EitherTypeLambda<E>, A> $fa
      * @param callable(A): HK<EitherTypeLambda<E>, B> $ab
-     * @return HK<EitherTypeLambda<E>, B>
+     * @return Either<E, B>
      */
-    public function flatMap(HK $fa, callable $ab): HK
+    public function flatMap(mixed $fa, callable $ab): Either
     {
-        return EitherTypeLambda::fix($fa)->flatMap(
-            static fn($a) => EitherTypeLambda::fix($ab($a)),
-        );
+        return $fa->flatMap($ab);
     }
 
     /**
@@ -78,9 +76,9 @@ final readonly class EitherInstance implements Monad, Traverse
      * @param callable(B, A): B $reducer
      * @return B
      */
-    public function fold(HK $fa, mixed $zero, callable $reducer): mixed
+    public function fold(mixed $fa, mixed $zero, callable $reducer): mixed
     {
-        return EitherTypeLambda::fix($fa)->match(
+        return $fa->match(
             onLeft: static fn() => $zero,
             onRight: static fn($a) => $reducer($zero, $a),
         );
@@ -94,10 +92,10 @@ final readonly class EitherInstance implements Monad, Traverse
      * @param Applicative<G> $G
      * @param HK<EitherTypeLambda<E>, A> $fa
      * @param callable(A): HK<G, B> $ab
-     * @return HK<G, HK<EitherTypeLambda<E>, B>>
+     * @return HK<G, Either<E, B>>
      */
-    public function traverse(Applicative $G, HK $fa, callable $ab): HK
+    public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {
-        return EitherTypeLambda::fix($fa)->traverse($G, $ab);
+        return $fa->traverse($G, $ab);
     }
 }

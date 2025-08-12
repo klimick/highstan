@@ -103,13 +103,14 @@ final readonly class Option implements HK
      * @param callable(A): HK<G, B> $ab
      * @return HK<G, Option<B>>
      */
-    public function traverse(Applicative $G, callable $ab): HK
+    public function traverse(Applicative $G, callable $ab): mixed
     {
-        return $this->match(
-            onNone: static fn() => $G->pure(Option::none()),
-            /** @phpstan-ignore argument.type */
-            onSome: static fn($a) => $G->map($ab($a), Option::some(...)),
-        );
+        if ($this->data['type'] === 'none') {
+            return $G->pure(self::none());
+        }
+
+        /** @phpstan-ignore argument.type */
+        return $G->map($ab($this->data['some']), self::some(...));
     }
 
     /**

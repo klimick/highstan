@@ -10,7 +10,7 @@ use Highstan\HKEncoding\TypeLambda;
 /**
  * @template-covariant PartiallyAppliedE
  */
-final readonly class EitherTypeLambda implements TypeLambda
+interface EitherTypeLambda extends TypeLambda
 {
     /**
      * @template E
@@ -19,9 +19,5 @@ final readonly class EitherTypeLambda implements TypeLambda
      * @param HK<self<E>, A> $kind
      * @return Either<E, A>
      */
-    public static function fix(HK $kind): Either
-    {
-        /** @var Either<E, A> */
-        return $kind;
-    }
+    public static function fix(HK $kind): Either;
 }

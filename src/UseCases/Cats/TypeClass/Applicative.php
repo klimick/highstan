@@ -19,5 +19,5 @@ interface Applicative extends Apply
      * @param A $a
      * @return HK<F, A>
      */
-    public function pure(mixed $a): HK;
+    public function pure(mixed $a): mixed;
 }

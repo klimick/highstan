@@ -106,11 +106,12 @@ final readonly class Either implements HK
      */
     public function traverse(Applicative $G, callable $ab): HK
     {
-        return $this->match(
-            onLeft: static fn($e) => $G->pure(Either::left($e)),
-            /** @phpstan-ignore argument.type */
-            onRight: static fn($a) => $G->map($ab($a), Either::right(...)),
-        );
+        if ($this->data['type'] === 'left') {
+            return $G->pure(self::left($this->data['left']));
+        }
+
+        /** @phpstan-ignore argument.type */
+        return $G->map($ab($this->data['right']), self::right(...));
     }
 
     /**

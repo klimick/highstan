@@ -4,37 +4,36 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\HK;
+use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
-use Highstan\UseCases\Cats\Either\EitherTypeLambda;
+use Highstan\UseCases\Cats\Lst\Lst;
 use Highstan\UseCases\Cats\Lst\LstInstance;
-use Highstan\UseCases\Cats\Lst\LstTypeLambda;
+use Highstan\UseCases\Cats\Option\Option;
 use Highstan\UseCases\Cats\Option\OptionInstance;
-use Highstan\UseCases\Cats\Option\OptionTypeLambda;
 
 final readonly class ApplicativeUseCase
 {
     /**
-     * @return HK<OptionTypeLambda, int>
+     * @return Option<int>
      */
-    public function option(OptionInstance $optionI): HK
+    public function option(OptionInstance $optionI): Option
     {
         return $optionI->pure(42);
     }
 
     /**
      * @param EitherInstance<Err> $eitherI
-     * @return HK<EitherTypeLambda<Err>, int>
+     * @return Either<Err, int>
      */
-    public function either(EitherInstance $eitherI): HK
+    public function either(EitherInstance $eitherI): Either
     {
         return $eitherI->pure(42);
     }
 
     /**
-     * @return HK<LstTypeLambda, int>
+     * @return Lst<int>
      */
-    public function lst(LstInstance $lstInstance): HK
+    public function lst(LstInstance $lstInstance): Lst
     {
         return $lstInstance->pure(42);
     }

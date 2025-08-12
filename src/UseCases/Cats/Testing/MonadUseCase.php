@@ -4,20 +4,19 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\HK;
+use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
-use Highstan\UseCases\Cats\Either\EitherTypeLambda;
+use Highstan\UseCases\Cats\Lst\Lst;
 use Highstan\UseCases\Cats\Lst\LstInstance;
-use Highstan\UseCases\Cats\Lst\LstTypeLambda;
+use Highstan\UseCases\Cats\Option\Option;
 use Highstan\UseCases\Cats\Option\OptionInstance;
-use Highstan\UseCases\Cats\Option\OptionTypeLambda;
 
 final readonly class MonadUseCase
 {
     /**
-     * @return HK<OptionTypeLambda, int>
+     * @return Option<int>
      */
-    public function option(OptionInstance $optionI): HK
+    public function option(OptionInstance $optionI): Option
     {
         return $optionI->flatMap(
             $optionI->pure(1),
@@ -27,9 +26,9 @@ final readonly class MonadUseCase
 
     /**
      * @param EitherInstance<Err> $eitherI
-     * @return HK<EitherTypeLambda<Err>, int>
+     * @return Either<Err, int>
      */
-    public function either(EitherInstance $eitherI): HK
+    public function either(EitherInstance $eitherI): Either
     {
         return $eitherI->flatMap(
             $eitherI->pure(1),
@@ -38,9 +37,9 @@ final readonly class MonadUseCase
     }
 
     /**
-     * @return HK<LstTypeLambda, int>
+     * @return Lst<int>
      */
-    public function lst(LstInstance $lstI): HK
+    public function lst(LstInstance $lstI): Lst
     {
         return $lstI->flatMap(
             $lstI->pure(1),

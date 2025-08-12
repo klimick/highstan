@@ -20,9 +20,9 @@ final readonly class LstInstance implements Monad, Traverse
      * @template A
      *
      * @param A $a
-     * @return HK<LstTypeLambda, A>
+     * @return Lst<A>
      */
-    public function pure(mixed $a): HK
+    public function pure(mixed $a): Lst
     {
         return Lst::of($a);
     }
@@ -33,11 +33,11 @@ final readonly class LstInstance implements Monad, Traverse
      *
      * @param HK<LstTypeLambda, A> $fa
      * @param HK<LstTypeLambda, callable(A): B> $fab
-     * @return HK<LstTypeLambda, B>
+     * @return Lst<B>
      */
-    public function apply(HK $fa, HK $fab): HK
+    public function apply(mixed $fa, mixed $fab): Lst
     {
-        return LstTypeLambda::fix($fa)->apply(LstTypeLambda::fix($fab));
+        return $fa->apply($fab);
     }
 
     /**
@@ -49,22 +49,9 @@ final readonly class LstInstance implements Monad, Traverse
      * @param callable(B, A): B $reducer
      * @return B
      */
-    public function fold(HK $fa, mixed $zero, callable $reducer): mixed
+    public function fold(mixed $fa, mixed $zero, callable $reducer): mixed
     {
-        return LstTypeLambda::fix($fa)->fold($zero, $reducer);
-    }
-
-    /**
-     * @template A
-     * @template B
-     *
-     * @param HK<LstTypeLambda, A> $fa
-     * @param callable(A): B $ab
-     * @return HK<LstTypeLambda, B>
-     */
-    public function map(HK $fa, callable $ab): HK
-    {
-        return LstTypeLambda::fix($fa)->map($ab);
+        return $fa->fold($zero, $reducer);
     }
 
     /**
@@ -73,13 +60,24 @@ final readonly class LstInstance implements Monad, Traverse
      *
      * @param HK<LstTypeLambda, A> $fa
      * @param callable(A): HK<LstTypeLambda, B> $ab
-     * @return HK<LstTypeLambda, B>
+     * @return Lst<B>
      */
-    public function flatMap(HK $fa, callable $ab): HK
+    public function flatMap(mixed $fa, callable $ab): Lst
     {
-        return LstTypeLambda::fix($fa)->flatMap(
-            static fn($a) => LstTypeLambda::fix($ab($a)),
-        );
+        return $fa->flatMap($ab);
+    }
+
+    /**
+     * @template A
+     * @template B
+     *
+     * @param HK<LstTypeLambda, A> $fa
+     * @param callable(A): B $ab
+     * @return Lst<B>
+     */
+    public function map(mixed $fa, callable $ab): Lst
+    {
+        return $fa->map($ab);
     }
 
     /**
@@ -92,8 +90,8 @@ final readonly class LstInstance implements Monad, Traverse
      * @param callable(A): HK<G, B> $ab
      * @return HK<G, HK<LstTypeLambda, B>>
      */
-    public function traverse(Applicative $G, HK $fa, callable $ab): HK
+    public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {
-        return LstTypeLambda::fix($fa)->traverse($G, $ab);
+        return $fa->traverse($G, $ab);
     }
 }

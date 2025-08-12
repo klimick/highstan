@@ -21,5 +21,5 @@ interface Foldable
      * @param callable(B, A): B $reducer
      * @return B
      */
-    public function fold(HK $fa, mixed $zero, callable $reducer): mixed;
+    public function fold(mixed $fa, mixed $zero, callable $reducer): mixed;
 }

@@ -20,9 +20,9 @@ final readonly class FoldableUseCase
     public function fold(Foldable&Applicative $F): int
     {
         return $F->fold(
-            reducer: static fn(int $a, int $b) => $a + $b,
-            zero: 1,
             fa: $F->pure(41),
+            zero: 1,
+            reducer: static fn(int $a, int $b) => $a + $b,
         );
     }
 

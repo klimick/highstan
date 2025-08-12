@@ -21,5 +21,5 @@ interface Monad extends Applicative
      * @param callable(A): HK<F, B> $ab
      * @return HK<F, B>
      */
-    public function flatMap(HK $fa, callable $ab): HK;
+    public function flatMap(mixed $fa, callable $ab): mixed;
 }
