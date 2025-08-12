@@ -7,7 +7,7 @@ namespace Highstan\UseCases\GADT;
 use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 
-final readonly class EvaluateTypeLambda implements TypeLambda
+interface EvaluateTypeLambda extends TypeLambda
 {
     /**
      * @template A
@@ -15,9 +15,5 @@ final readonly class EvaluateTypeLambda implements TypeLambda
      * @param HK<self, A> $kind
      * @return Evaluate<A>
      */
-    public static function fix(HK $kind): Evaluate
-    {
-        /** @var Evaluate<A> */
-        return $kind;
-    }
+    public static function fix(mixed $kind): Evaluate;
 }

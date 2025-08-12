@@ -19,5 +19,5 @@ interface Exp extends HK
      * @param ExpVisitor<R> $visitor
      * @return HK<R, A>
      */
-    public function accept(ExpVisitor $visitor): HK;
+    public function accept(ExpVisitor $visitor): mixed;
 }

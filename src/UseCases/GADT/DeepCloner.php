@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\GADT;
 
-use Highstan\HKEncoding\HK;
-
 /**
  * @implements ExpVisitor<ExpTypeLambda>
  */
@@ -19,38 +17,36 @@ final readonly class DeepCloner implements ExpVisitor
      */
     public static function clone(Exp $exp): Exp
     {
-        $cloned = $exp->accept(new self());
-
-        return ExpTypeLambda::fix($cloned);
+        return $exp->accept(new self());
     }
 
     /**
-     * @return HK<ExpTypeLambda, int>
+     * @return Exp<int>
      */
-    public function visitNum(Num $exp): HK
+    public function visitNum(Num $exp): Exp
     {
         return new Num($exp->value);
     }
 
     /**
-     * @return HK<ExpTypeLambda, int>
+     * @return Exp<int>
      */
-    public function visitAdd(Add $exp): HK
+    public function visitAdd(Add $exp): Exp
     {
         return new Add(
-            left: self::clone($exp->left),
-            right: self::clone($exp->right),
+            left: $exp->left->accept($this),
+            right: $exp->right->accept($this),
         );
     }
 
     /**
-     * @return HK<ExpTypeLambda, bool>
+     * @return Exp<bool>
      */
-    public function visitEq(Eq $exp): HK
+    public function visitEq(Eq $exp): Exp
     {
         return new Eq(
-            left: self::clone($exp->left),
-            right: self::clone($exp->right),
+            left: $exp->left->accept($this),
+            right: $exp->right->accept($this),
         );
     }
 }

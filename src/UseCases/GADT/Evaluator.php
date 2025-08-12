@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\GADT;
 
-use Highstan\HKEncoding\HK;
-
 /**
  * @implements ExpVisitor<EvaluateTypeLambda>
  */
@@ -19,36 +17,36 @@ final readonly class Evaluator implements ExpVisitor
      */
     public static function evaluate(Exp $exp): Evaluate
     {
-        $kind = $exp->accept(new self());
-
-        return EvaluateTypeLambda::fix($kind);
+        return $exp->accept(new self());
     }
 
     /**
-     * @return HK<EvaluateTypeLambda, int>
+     * @return Evaluate<int>
      */
-    public function visitNum(Num $exp): HK
+    public function visitNum(Num $exp): Evaluate
     {
         return new Evaluate(static fn() => $exp->value);
     }
 
     /**
-     * @return HK<EvaluateTypeLambda, int>
+     * @return Evaluate<int>
      */
-    public function visitAdd(Add $exp): HK
+    public function visitAdd(Add $exp): Evaluate
     {
-        return new Evaluate(
-            static fn() => self::evaluate($exp->left)->run() + self::evaluate($exp->right)->run(),
-        );
+        $left = $exp->left->accept($this);
+        $right = $exp->right->accept($this);
+
+        return new Evaluate(static fn() => $left() + $right());
     }
 
     /**
-     * @return HK<EvaluateTypeLambda, bool>
+     * @return Evaluate<bool>
      */
-    public function visitEq(Eq $exp): HK
+    public function visitEq(Eq $exp): Evaluate
     {
-        return new Evaluate(
-            static fn() => self::evaluate($exp->left)->run() === self::evaluate($exp->right)->run(),
-        );
+        $left = $exp->left->accept($this);
+        $right = $exp->right->accept($this);
+
+        return new Evaluate(static fn() => $left() === $right());
     }
 }

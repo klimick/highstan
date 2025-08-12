@@ -15,15 +15,15 @@ interface ExpVisitor
     /**
      * @return HK<R, int>
      */
-    public function visitNum(Num $exp): HK;
+    public function visitNum(Num $exp): mixed;
 
     /**
      * @return HK<R, int>
      */
-    public function visitAdd(Add $exp): HK;
+    public function visitAdd(Add $exp): mixed;
 
     /**
      * @return HK<R, bool>
      */
-    public function visitEq(Eq $exp): HK;
+    public function visitEq(Eq $exp): mixed;
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Highstan\UseCases\GADT;
 
 use Highstan\HKEncoding\HK;
+use Highstan\HKEncoding\TypeLambda;
 
 /**
  * @implements Exp<bool>
@@ -20,7 +21,13 @@ final readonly class Eq implements Exp
         public Exp $right,
     ) {}
 
-    public function accept(ExpVisitor $visitor): HK
+    /**
+     * @template R of TypeLambda
+     *
+     * @param ExpVisitor<R> $visitor
+     * @return HK<R, bool>
+     */
+    public function accept(ExpVisitor $visitor): mixed
     {
         return $visitor->visitEq($this);
     }

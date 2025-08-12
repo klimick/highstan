@@ -22,7 +22,7 @@ final readonly class Evaluate implements HK
     /**
      * @return A
      */
-    public function run(): mixed
+    public function __invoke(): mixed
     {
         return ($this->evaluate)();
     }

@@ -7,7 +7,7 @@ namespace Highstan\UseCases\GADT;
 use Highstan\HKEncoding\HK;
 use Highstan\HKEncoding\TypeLambda;
 
-final readonly class ExpTypeLambda implements TypeLambda
+interface ExpTypeLambda extends TypeLambda
 {
     /**
      * @template A
@@ -15,9 +15,5 @@ final readonly class ExpTypeLambda implements TypeLambda
      * @param HK<self, A> $kind
      * @return Exp<A>
      */
-    public static function fix(HK $kind): Exp
-    {
-        /** @var Exp<A> */
-        return $kind;
-    }
+    public static function fix(mixed $kind): Exp;
 }
