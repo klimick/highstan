@@ -17,7 +17,7 @@ interface Exp extends HK
      * @template R of TypeLambda
      *
      * @param ExpVisitor<R> $visitor
-     * @return HK<R, A>
+     * @return R<A>
      */
     public function accept(ExpVisitor $visitor): mixed;
 }
