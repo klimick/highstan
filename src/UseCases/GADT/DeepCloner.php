@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Highstan\UseCases\GADT;
 
 /**
- * @implements ExpVisitor<ExpTypeLambda>
+ * @implements ExpVisitor<type-lam(x): Exp<x>>
  */
 final readonly class DeepCloner implements ExpVisitor
 {

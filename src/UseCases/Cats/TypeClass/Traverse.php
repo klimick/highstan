@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\TypeClass;
 
-use Highstan\HKEncoding\TypeLambda;
-
 /**
- * @template F of TypeLambda
+ * @template F of type-lam<_>
  * @extends Functor<F>
  * @extends Foldable<F>
  */
 interface Traverse extends Functor, Foldable
 {
     /**
-     * @template G of TypeLambda
+     * @template G of type-lam<_>
      * @template A
      * @template B
      *

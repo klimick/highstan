@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
 use Highstan\UseCases\Cats\Lst\Lst;
@@ -17,8 +16,8 @@ use Highstan\UseCases\Cats\TypeClass\Traverse;
 final readonly class TraverseUseCase
 {
     /**
-     * @template F of TypeLambda
-     * @template G of TypeLambda
+     * @template F of type-lam<_>
+     * @template G of type-lam<_>
      *
      * @param Traverse<F> $F
      * @param Applicative<G> $G

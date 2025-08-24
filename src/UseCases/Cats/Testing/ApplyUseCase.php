@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
 use Highstan\UseCases\Cats\Lst\Lst;
@@ -17,7 +16,7 @@ use Highstan\UseCases\Cats\TypeClass\Apply;
 final readonly class ApplyUseCase
 {
     /**
-     * @template F of TypeLambda
+     * @template F of type-lam<_>
      *
      * @param Apply<F> $F
      * @param F<int> $number
@@ -30,14 +29,14 @@ final readonly class ApplyUseCase
     }
 
     /**
-     * @template F of TypeLambda
+     * @template F of type-lam<_>
      *
      * @param Applicative<F> $F
-     * @return F<callable(int): string>
+     * @return F<\Closure(int): string>
      */
     public static function stringifier(Applicative $F): mixed
     {
-        return $F->pure(static fn(int $n): string => "{$n}");
+        return $F->pure(Utils::intToString(...));
     }
 
     /**

@@ -4,17 +4,13 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\GADT;
 
-use Highstan\HKEncoding\HK;
-use Highstan\HKEncoding\TypeLambda;
-
 /**
  * @template A
- * @extends HK<ExpTypeLambda, A>
  */
-interface Exp extends HK
+interface Exp
 {
     /**
-     * @template R of TypeLambda
+     * @template R of type-lam<_>
      *
      * @param ExpVisitor<R> $visitor
      * @return R<A>

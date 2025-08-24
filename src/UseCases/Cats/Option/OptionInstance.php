@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Option;
 
-use Highstan\HKEncoding\HK;
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\TypeClass\Applicative;
 use Highstan\UseCases\Cats\TypeClass\Monad;
 use Highstan\UseCases\Cats\TypeClass\Traverse;
 
 /**
- * @implements Monad<OptionTypeLambda>
- * @implements Traverse<OptionTypeLambda>
+ * @implements Monad<type-lam(x): Option<x>>
+ * @implements Traverse<type-lam(x): Option<x>>
  */
 final readonly class OptionInstance implements Monad, Traverse
 {
@@ -31,8 +29,8 @@ final readonly class OptionInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<OptionTypeLambda, A> $fa
-     * @param HK<OptionTypeLambda, callable(A): B> $fab
+     * @param Option<A> $fa
+     * @param Option<callable(A): B> $fab
      * @return Option<B>
      */
     public function apply(mixed $fa, mixed $fab): Option
@@ -44,7 +42,7 @@ final readonly class OptionInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<OptionTypeLambda, A> $fa
+     * @param Option<A> $fa
      * @param callable(A): B $ab
      * @return Option<B>
      */
@@ -57,8 +55,8 @@ final readonly class OptionInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<OptionTypeLambda, A> $fa
-     * @param callable(A): HK<OptionTypeLambda, B> $ab
+     * @param Option<A> $fa
+     * @param callable(A): Option<B> $ab
      * @return Option<B>
      */
     public function flatMap(mixed $fa, callable $ab): Option
@@ -70,7 +68,7 @@ final readonly class OptionInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<OptionTypeLambda, A> $fa
+     * @param Option<A> $fa
      * @param B $zero
      * @param callable(B, A): B $reducer
      * @return B
@@ -84,12 +82,12 @@ final readonly class OptionInstance implements Monad, Traverse
     }
 
     /**
-     * @template G of TypeLambda
+     * @template G of type-lam<_>
      * @template A
      * @template B
      *
      * @param Applicative<G> $G
-     * @param HK<OptionTypeLambda, A> $fa
+     * @param Option<A> $fa
      * @param callable(A): G<B> $ab
      * @return G<Option<B>>
      */

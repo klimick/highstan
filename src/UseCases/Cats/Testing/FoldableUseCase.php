@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\EitherInstance;
 use Highstan\UseCases\Cats\Lst\LstInstance;
 use Highstan\UseCases\Cats\Option\OptionInstance;
@@ -14,7 +13,7 @@ use Highstan\UseCases\Cats\TypeClass\Foldable;
 final readonly class FoldableUseCase
 {
     /**
-     * @template F of TypeLambda
+     * @template F of type-lam<_>
      * @param Foldable<F> & Applicative<F> $F
      */
     public function fold(Foldable&Applicative $F): int

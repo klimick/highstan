@@ -4,9 +4,28 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\HKNormalization;
 
-use Highstan\HKEncoding\TypeLambda;
-
 /**
- * @template F of TypeLambda
+ * @template F of type-lam<_>
  */
-interface Typeclass {}
+interface Typeclass
+{
+    /**
+     * @template A
+     * @template B
+     *
+     * @param F<A> $fa
+     * @param callable(A): B $ab
+     * @return F<B>
+     */
+    public function m1(mixed $fa, callable $ab): mixed;
+
+    /**
+     * @template A
+     * @template B
+     *
+     * @param F<A> $fa
+     * @param callable(A): B $ab
+     * @return F<B>
+     */
+    public function m2(mixed $fa, callable $ab): mixed;
+}

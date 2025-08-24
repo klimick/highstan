@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Lst;
 
-use Highstan\HKEncoding\HK;
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\TypeClass\Applicative;
 use Highstan\UseCases\Cats\TypeClass\Monad;
 use Highstan\UseCases\Cats\TypeClass\Traverse;
 
 /**
- * @implements Monad<LstTypeLambda>
- * @implements Traverse<LstTypeLambda>
+ * @implements Monad<type-lam(x): Lst<x>>
+ * @implements Traverse<type-lam(x): Lst<x>>
  */
 final readonly class LstInstance implements Monad, Traverse
 {
@@ -31,8 +29,8 @@ final readonly class LstInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<LstTypeLambda, A> $fa
-     * @param HK<LstTypeLambda, callable(A): B> $fab
+     * @param Lst<A> $fa
+     * @param Lst<callable(A): B> $fab
      * @return Lst<B>
      */
     public function apply(mixed $fa, mixed $fab): Lst
@@ -44,7 +42,7 @@ final readonly class LstInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<LstTypeLambda, A> $fa
+     * @param Lst<A> $fa
      * @param B $zero
      * @param callable(B, A): B $reducer
      * @return B
@@ -58,8 +56,8 @@ final readonly class LstInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<LstTypeLambda, A> $fa
-     * @param callable(A): HK<LstTypeLambda, B> $ab
+     * @param Lst<A> $fa
+     * @param callable(A): Lst<B> $ab
      * @return Lst<B>
      */
     public function flatMap(mixed $fa, callable $ab): Lst
@@ -71,7 +69,7 @@ final readonly class LstInstance implements Monad, Traverse
      * @template A
      * @template B
      *
-     * @param HK<LstTypeLambda, A> $fa
+     * @param Lst<A> $fa
      * @param callable(A): B $ab
      * @return Lst<B>
      */
@@ -81,14 +79,14 @@ final readonly class LstInstance implements Monad, Traverse
     }
 
     /**
-     * @template G of TypeLambda
+     * @template G of type-lam<_>
      * @template A
      * @template B
      *
      * @param Applicative<G> $G
-     * @param HK<LstTypeLambda, A> $fa
+     * @param Lst<A> $fa
      * @param callable(A): G<B> $ab
-     * @return G<HK<LstTypeLambda, B>>
+     * @return G<Lst<B>>
      */
     public function traverse(Applicative $G, mixed $fa, callable $ab): mixed
     {

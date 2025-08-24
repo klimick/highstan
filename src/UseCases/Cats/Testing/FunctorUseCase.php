@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Testing;
 
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\Either\Either;
 use Highstan\UseCases\Cats\Either\EitherInstance;
 use Highstan\UseCases\Cats\Lst\Lst;
@@ -17,7 +16,7 @@ use Highstan\UseCases\Cats\TypeClass\Functor;
 final readonly class FunctorUseCase
 {
     /**
-     * @template F of TypeLambda
+     * @template F of type-lam<_>
      *
      * @param Functor<F> $F
      * @param F<int> $number
@@ -25,13 +24,11 @@ final readonly class FunctorUseCase
      */
     public function asString(Functor $F, mixed $number): mixed
     {
-        $toString = static fn(int $str): string => "{$str}";
-
-        return $F->map($number, $toString);
+        return $F->map($number, Utils::intToString(...));
     }
 
     /**
-     * @template F of TypeLambda
+     * @template F of type-lam<_>
      *
      * @param Applicative<F> $F
      * @return F<int>

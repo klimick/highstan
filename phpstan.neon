@@ -6,7 +6,19 @@
   "parameters": {
     "level": "max",
     "paths": [
-      "src"
+      "src",
+      "extensible-visitor.local.php",
+      "hk-partial-application.local.php",
+      "main.php",
+      "object-partial-application.local.php",
+      "some-tests.local.php",
+      "type-lam-from-class.local.php",
+      "type-lam-variance.local.php",
+      "type-lam-variance-position.local.php",
+      "unsoundness-main.local.php",
+      "unsupported.local.php",
+      "type-lam-collector.local.php",
+      "functor-compose.local.php"
     ],
     "editorUrl": "=>",
     "editorUrlTitle": "%%file%%:%%line%%",
@@ -14,16 +26,40 @@
     "checkBenevolentUnionTypes": true
   },
   "services": {
-    "NormalizeHKExpression": {
-      "class": "Highstan\\NormalizeHKExpression",
-      "tags": [
-        "phpstan.broker.expressionTypeResolverExtension"
-      ]
-    },
-    "HKTypeNodeResolver": {
-      "class": "Highstan\\HKTypeNodeResolver",
+    "HigherTypeNodeResolver": {
+      "class": "Highstan\\HigherTypeNodeResolver",
       "tags": [
         "phpstan.phpDoc.typeNodeResolverExtension"
+      ]
+    },
+    "TypeLamAppChecker": {
+      "class": "Highstan\\Higher\\Rule\\TypeLamAppChecker"
+    },
+    "TypeLamAppCheckerInClassNode": {
+      "class": "Highstan\\Higher\\Rule\\TypeLamAppChecker\\TypeLamAppCheckerInClassNode",
+      "tags": [
+        "phpstan.rules.rule"
+      ]
+    },
+    "TypeLamAppCheckerInFunctionNode": {
+      "class": "Highstan\\Higher\\Rule\\TypeLamAppChecker\\TypeLamAppCheckerInFunctionNode",
+      "tags": [
+        "phpstan.rules.rule"
+      ]
+    },
+    "TypeLamChecker": {
+      "class": "Highstan\\Higher\\Rule\\TypeLamChecker"
+    },
+    "TypeLamCheckerInClassNode": {
+      "class": "Highstan\\Higher\\Rule\\TypeLamChecker\\TypeLamCheckerInClassNode",
+      "tags": [
+        "phpstan.rules.rule"
+      ]
+    },
+    "TypeLamCheckerInFunctionNode": {
+      "class": "Highstan\\Higher\\Rule\\TypeLamChecker\\TypeLamCheckerInFunctionNode",
+      "tags": [
+        "phpstan.rules.rule"
       ]
     }
   }

@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Lst;
 
-use Highstan\HKEncoding\HK;
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\TypeClass\Applicative;
 
 /**
  * @template-covariant A = never
- * @implements HK<LstTypeLambda, A>
  * @implements \IteratorAggregate<int, A>
  */
-final readonly class Lst implements HK, \IteratorAggregate
+final readonly class Lst implements \IteratorAggregate
 {
     /**
      * @param list<A> $fa
@@ -103,7 +100,18 @@ final readonly class Lst implements HK, \IteratorAggregate
     }
 
     /**
-     * @template G of TypeLambda
+     * @template V
+     *
+     * @param Lst<V> $fb
+     * @return \Closure(V): Lst<V>
+     */
+    private static function addToList(self $fb): \Closure
+    {
+        return $fb->with(...);
+    }
+
+    /**
+     * @template G of type-lam<_>
      * @template B
      *
      * @param Applicative<G> $G
@@ -112,22 +120,16 @@ final readonly class Lst implements HK, \IteratorAggregate
      */
     public function traverse(Applicative $G, callable $ab): mixed
     {
-        /**
-         * @var G<self<B>> $gfb
-         * @phpstan-ignore varTag.type
-         */
+        /** @var G<self<B>> $gfb */
         $gfb = $G->pure(new self());
-
-        /**
-         * @var callable(Lst<B>): (callable(B): Lst<B>) $addToList
-         * @phpstan-ignore varTag.nativeType
-         */
-        $addToList = static fn(Lst $fb) => $fb->with(...);
+        $addToList = self::addToList(...);
 
         foreach ($this as $a) {
             /**
              * @var G<self<B>> $gfb
-             * @phpstan-ignore varTag.type, argument.type
+             *
+             * argument.type: PHPStan has poor support for polymorphic functions.
+             * @phpstan-ignore argument.type
              */
             $gfb = $G->apply($ab($a), $G->map($gfb, $addToList));
         }

@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Either;
 
-use Highstan\HKEncoding\HK;
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\TypeClass\Applicative;
 
 /**
  * @template-covariant E = never
  * @template-covariant A = never
- * @implements HK<EitherTypeLambda<E>, A>
  */
-final readonly class Either implements HK
+final readonly class Either
 {
     /**
      * @param ( array{type: 'left', left: E}
@@ -97,20 +94,33 @@ final readonly class Either implements HK
     }
 
     /**
-     * @template G of TypeLambda
+     * @template G of type-lam<_>
      * @template B
      *
      * @param Applicative<G> $G
      * @param callable(A): G<B> $ab
      * @return G<Either<E, B>>
+     *
+     * generics.variance: Type parameter E occurs in invariant position.
+     *                    Without lower bounds issue is unsolvable.
+     *
+     * @phpstan-ignore generics.variance
      */
-    public function traverse(Applicative $G, callable $ab): HK
+    public function traverse(Applicative $G, callable $ab): mixed
     {
         if ($this->data['type'] === 'left') {
+            /**
+             * return.type: Is variance issue. G<Either<E, never>> =!= G<Either<E, B>>.
+             * @phpstan-ignore return.type
+             */
             return $G->pure(self::left($this->data['left']));
         }
 
-        /** @phpstan-ignore argument.type */
+        /**
+         * return.type: Is variance issue. G<Either<never, B>> =!= G<Either<E, B>>
+         * argument.type: PHPStan has poor support for polymorphic functions.
+         * @phpstan-ignore return.type, argument.type
+         */
         return $G->map($ab($this->data['right']), self::right(...));
     }
 

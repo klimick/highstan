@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\GADT;
 
-use Highstan\HKEncoding\TypeLambda;
-
 /**
- * @template R of TypeLambda
+ * @template R of type-lam<_>
  */
 interface ExpVisitor
 {

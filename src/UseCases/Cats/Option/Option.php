@@ -4,15 +4,12 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\Option;
 
-use Highstan\HKEncoding\HK;
-use Highstan\HKEncoding\TypeLambda;
 use Highstan\UseCases\Cats\TypeClass\Applicative;
 
 /**
- * @template A = never
- * @implements HK<OptionTypeLambda, A>
+ * @template-covariant A = never
  */
-final readonly class Option implements HK
+final readonly class Option
 {
     /**
      * @param ( array{type: 'some', some: A}
@@ -96,7 +93,7 @@ final readonly class Option implements HK
     }
 
     /**
-     * @template G of TypeLambda
+     * @template G of type-lam<_>
      * @template B
      *
      * @param Applicative<G> $G
@@ -106,10 +103,17 @@ final readonly class Option implements HK
     public function traverse(Applicative $G, callable $ab): mixed
     {
         if ($this->data['type'] === 'none') {
+            /**
+             * return.type: Issues with variance. G<Option<never>> =!= G<Option<B>>.
+             * @phpstan-ignore return.type
+             */
             return $G->pure(self::none());
         }
 
-        /** @phpstan-ignore argument.type */
+        /**
+         * argument.type: PHPStan has poor support for polymorphic functions.
+         * @phpstan-ignore argument.type
+         */
         return $G->map($ab($this->data['some']), self::some(...));
     }
 

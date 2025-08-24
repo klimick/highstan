@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Highstan\UseCases\Cats\TypeClass;
 
-use Highstan\HKEncoding\TypeLambda;
-
 /**
- * @template F of TypeLambda
+ * @template F of type-lam<_>
  */
 interface Functor
 {
