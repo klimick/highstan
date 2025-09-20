@@ -54,3 +54,8 @@ Higher-Kinded Types let us:
 - [GADT Visitor](https://github.com/klimick/highstan/tree/master/src/UseCases/GADT)
 - [Tagless final](https://github.com/klimick/highstan/tree/master/src/UseCases/TaglessFinal)
 - [Functor, Applicative, Monad](https://github.com/klimick/highstan/tree/master/src/UseCases/Cats)
+
+## TODO
+
+- Detailed tests (besides examples)
+- Wrap to PHPStan extension
